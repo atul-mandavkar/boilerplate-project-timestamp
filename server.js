@@ -36,11 +36,11 @@ let monthsInLetters = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "
 // Fpr blank date input after api/
 app.get("/api", (req, res)=>{
   let d = new Date();
-  let dateNumber = (d.getDate() < 10) ? ("0" + d.getDate()) : (d.getDate());
-  let h = (d.getHours() < 10) ? ("0" + d.getHours()) : (d.getHours());
-  let m = (d.getMinutes() < 10) ? ("0" + d.getMinutes()) : (d.getMinutes());
-  let s = (d.getSeconds() < 10) ? ("0" + d.getSeconds()) : (d.getSeconds());
-  let utcVal = daysInLetters[d.getDay()] + ", " + dateNumber + " " + monthsInLetters[d.getMonth()] + " " + d.getFullYear() + " " + h + ":" + m + ":" + s + " GMT";
+  let dateNumber = (d.getUTCDate() < 10) ? ("0" + d.getUTCDate()) : (d.getUTCDate());
+  let h = (d.getUTCHours() < 10) ? ("0" + d.getUTCHours()) : (d.getUTCHours());
+  let m = (d.getUTCMinutes() < 10) ? ("0" + d.getUTCMinutes()) : (d.getUTCMinutes());
+  let s = (d.getUTCSeconds() < 10) ? ("0" + d.getUTCSeconds()) : (d.getUTCSeconds());
+  let utcVal = daysInLetters[d.getDay()] + ", " + dateNumber + " " + monthsInLetters[d.getMonth()] + " " + d.getUTCFullYear() + " " + h + ":" + m + ":" + s + " GMT";
   res.json({unix:d.getTime() , utc: utcVal});
 })
 
@@ -56,6 +56,7 @@ app.use("/api/:date", (req, res)=>{
     if((/\D/).test(x) && !((/[.]/).test(x)) && !((/^-/).test(x))){
       // After api/ if the actual date is present
       if(d.getTime()){
+        console.log(typeof x)
         dateNumber = (d.getDate() < 10) ? ("0" + d.getDate()) : (d.getDate());
         unixVal = d.getTime();
         utcVal = daysInLetters[d.getDay()] + ", " + dateNumber + " " + monthsInLetters[d.getMonth()] + " " + d.getFullYear() + " 00:00:00 GMT";
