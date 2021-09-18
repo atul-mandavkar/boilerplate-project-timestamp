@@ -142,7 +142,7 @@ app.use("/api/:date", (req, res)=>{
 })
 // Find the negative number and negative date in numbers
 
-//var port = process.env.PORT || 3000
+var port = process.env.PORT
 // listen for requests :)
 var listener = app.listen(port, function () {
   console.log('Your app is listening on port ' + listener.address().port);
