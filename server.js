@@ -55,7 +55,18 @@ app.use("/api/:date", (req, res)=>{
     // After api/ there is not only number (must be date or alphabates) present with no dashes at start and no dots
     if((/\D/).test(x) && !((/[.]/).test(x)) && !((/^-/).test(x))){
       // After api/ if the actual date is present
-      if(d.getTime()){
+      if(((x.includes(" ")?(x.match(/\s/g)[0].length == 2):(false))) || ((x.includes(" ")?(x.match(/\s/g)[0].length == 1):(false)))){
+        if(!d.getTime()){
+          res.json({error: "Invalid Date"})
+        }
+        else{
+          dateNumber = (d.getUTCDate() < 10) ? ("0" + d.getDate()) : (d.getDate());
+          utcVal = daysInLetters[d.getDay()] + ", " + dateNumber + " " + monthsInLetters[d.getMonth()] + " " + d.getFullYear() + " 00:00:00 GMT";
+          unixVal = Date.parse(utcVal);
+          res.json({unix: unixVal, utc: utcVal});
+        }
+      }
+      else if(d.getTime()){
         dateNumber = (d.getDate() < 10) ? ("0" + d.getDate()) : (d.getDate());
         unixVal = d.getTime();
         utcVal = daysInLetters[d.getDay()] + ", " + dateNumber + " " + monthsInLetters[d.getMonth()] + " " + d.getFullYear() + " 00:00:00 GMT";
@@ -124,7 +135,7 @@ app.use("/api/:date", (req, res)=>{
             res.json({unix: parseInt(x), utc: utcVal})
           }
         }
-        else if((x.includes(".")?(x.match(/^.\d/g)[0].length == 2):(false)) || ((x.includes(" ")?(x.match(/\s/g)[0].length == 2):(false))) || ((x.includes(" ")?(x.match(/\s/g)[0].length == 1):(false)))){
+        else if((x.includes(".")?(x.match(/^.\d/g)[0].length == 2):(false))){
           dateNumber = (d.getUTCDate() < 10) ? ("0" + d.getDate()) : (d.getDate());
           utcVal = daysInLetters[d.getDay()] + ", " + dateNumber + " " + monthsInLetters[d.getMonth()] + " " + d.getFullYear() + " 00:00:00 GMT";
           unixVal = Date.parse(utcVal);
