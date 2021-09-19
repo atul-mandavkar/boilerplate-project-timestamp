@@ -40,8 +40,14 @@ app.get("/api", (req, res)=>{
   res.json({unix:d.getTime() , utc: utcVal});
 })
 
+let inputValue, d;
 // For some input after api/
-
+app.get("/api/:date", (req, res)=>{
+  inputValue = req.params.date;
+  d = new Date(inputValue)
+  utcVal = d.toUTCString();
+  res.json({unix: d.getTime(), utc: utcVal})
+})
 
 var port = process.env.PORT || 3000
 // listen for requests :)
