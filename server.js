@@ -158,6 +158,7 @@ app.use("/api/:date", (req, res)=>{
   }
   checkNumber(arg);
 })
+// only want to do make url publicly visible
 
 
 var port = process.env.PORT || 3000
