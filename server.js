@@ -55,9 +55,13 @@ app.get("/api/:date", (req, res)=>{
   }
   else{
     // if input is not only integer number
-    d = new Date(inputValue);
-    utcVal = d.toUTCString();
-    res.json({unix: d.getTime(), utc: utcVal});
+    console.log(Date.parse(inputValue))
+    // if input can successfully parse date function
+    if(Date.parse(inputValue)){
+      d = new Date(inputValue);
+      utcVal = d.toUTCString();
+      res.json({unix: d.getTime(), utc: utcVal});
+    }
   }
 })
 
