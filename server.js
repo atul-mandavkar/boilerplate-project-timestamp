@@ -33,20 +33,32 @@ app.get("/api/hello", function (req, res) {
 let daysInLetters = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 let monthsInLetters = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+let d, unixVal, utcVal;
 // Fpr blank date input after api/
 app.get("/api", (req, res)=>{
-  let d = new Date();
-  let utcVal = d.toUTCString();
+  d = new Date();
+  utcVal = d.toUTCString();
   res.json({unix:d.getTime() , utc: utcVal});
 })
 
-let inputValue, d;
+let inputValue;
 // For some input after api/
 app.get("/api/:date", (req, res)=>{
   inputValue = req.params.date;
-  d = new Date(inputValue)
-  utcVal = d.toUTCString();
-  res.json({unix: d.getTime(), utc: utcVal})
+  if(inputValue == parseInt(inputValue)){
+    // if input is only integer number
+    unixVal = parseInt(inputValue);
+    d = new Date();
+    d.setTime(inputValue);
+    utcVal = d.toUTCString();
+    res.json({unix: unixVal, utc: utcVal});
+  }
+  else{
+    // if input is not only integer number
+    d = new Date(inputValue);
+    utcVal = d.toUTCString();
+    res.json({unix: d.getTime(), utc: utcVal});
+  }
 })
 
 var port = process.env.PORT || 3000
