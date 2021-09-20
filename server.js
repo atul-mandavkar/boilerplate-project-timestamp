@@ -45,7 +45,7 @@ app.get("/api", (req, res)=>{
 })
 
 // For some input after api/
-app.use("/api/:date", (req, res)=>{
+app.get("/api/:date", (req, res)=>{
   let arg = req.params.date;
   //let nArg = Number(arg);
   let d, utcval, unixVal, dateNumber, h, m, s;
@@ -158,7 +158,6 @@ app.use("/api/:date", (req, res)=>{
   }
   checkNumber(arg);
 })
-// only want to do make url publicly visible
 
 
 var port = process.env.PORT || 3000
