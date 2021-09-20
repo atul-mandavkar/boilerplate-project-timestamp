@@ -157,7 +157,7 @@ app.get("/api/:date", (req, res)=>{
     }
   }
   checkNumber(arg);
-})
+});
 
 
 var port = process.env.PORT
